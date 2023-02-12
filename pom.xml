@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
+		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -54,6 +55,20 @@
 		    <artifactId>mapstruct</artifactId>
 		    <version>${org.mapstruct.version}</version> 
 		</dependency>
+		<!-- Query DSL -->
+		<dependency>
+	        <groupId>com.querydsl</groupId>
+	        <artifactId>querydsl-apt</artifactId>
+	        <version>${querydsl.version}</version>
+	        <classifier>jakarta</classifier>
+	        <scope>provided</scope>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.querydsl</groupId>
+	        <artifactId>querydsl-jpa</artifactId>
+	        <classifier>jakarta</classifier>
+	        <version>${querydsl.version}</version>
+	    </dependency>
 	</dependencies>
 
 	<build>

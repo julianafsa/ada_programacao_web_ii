@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import br.com.ada.bookstore.model.dto.LivroDTO;
 import br.com.ada.bookstore.model.entity.Livro;
 import br.com.ada.bookstore.model.mapper.LivroMapper;
+import br.com.ada.bookstore.repository.LivroFilterRepository;
 import br.com.ada.bookstore.repository.LivroRepository;
 import br.com.ada.bookstore.service.LivroService;
 import jakarta.persistence.EntityManager;
@@ -21,6 +22,9 @@ public class LivroServiceImpl implements LivroService {
 
 	@Autowired
 	private LivroRepository repository;
+	
+	@Autowired
+	private LivroFilterRepository filterRepository;
 	
 	@Autowired
 	private LivroMapper mapper;
@@ -43,6 +47,18 @@ public class LivroServiceImpl implements LivroService {
 		throw new EntityNotFoundException();
 	}
 	
+	public List<LivroDTO> buscarPorNome(String nome) {
+		final List<Livro> entidades = repository.findByNome(nome);
+		return mapper.parseListDTO(entidades);
+	}
+	
+	@Override
+	public List<LivroDTO> filter(LivroDTO entityDTO) {
+		final Livro entidade = mapper.parseEntity(entityDTO);
+		final List<Livro> entidades = filterRepository.filtrar(entidade);
+		return mapper.parseListDTO(entidades);
+	}
+	
 	@Override
 	@Transactional
 	public LivroDTO criar(LivroDTO entidadeDTO) {
@@ -51,6 +67,13 @@ public class LivroServiceImpl implements LivroService {
 		repository.save(entidade);
 		em.refresh(entidade);
 		return mapper.parseDTO(entidade);
+	}
+	
+	@Transactional
+	public List<LivroDTO> criarVarios(List<LivroDTO> entidadesDTO) {
+		final List<Livro> entidades = mapper.parseListEntity(entidadesDTO);
+		repository.saveAll(entidades);
+		return mapper.parseListDTO(entidades);
 	}
 	
 	@Override
