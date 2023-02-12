@@ -16,14 +16,14 @@ import io.jsonwebtoken.security.Keys;
 public class JWTServiceImpl {
 	
 	private static SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-	//private static SecretKey secretKeyRefresh = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+	private static SecretKey refreshSecretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 	
-//	public String generateRefreshToken(String username) {
-//		return generateTokenBase(username, secretKeyRefresh, 60l);
-//	}
-
 	public String generateToken(String username) {
 		return generateTokenBase(username, secretKey, 30l);
+	}
+	
+	public String generateRefreshToken(String username) {
+		return generateTokenBase(username, refreshSecretKey, 60l);
 	}
 	
 	private String generateTokenBase(String username, SecretKey key, Long minutosExpiracao) {
@@ -45,20 +45,20 @@ public class JWTServiceImpl {
 				.isSigned(token);
 	}
 	
-//	public Boolean validRefreshToken(String refreshToken) {
-//		return Jwts.parserBuilder()
-//			.setSigningKey(secretKeyRefresh)
-//			.build()
-//			.isSigned(refreshToken);
-//	}
-	
-	public String getUsernameByToken(String token) {
-		return getUsernameByTokenBase(token,secretKey);
+	public Boolean validRefreshToken(String refreshToken) {
+		return Jwts.parserBuilder()
+				.setSigningKey(refreshSecretKey)
+				.build()
+				.isSigned(refreshToken);
 	}
 	
-//	public String getUsernameByRefreshToken(String refreshToken) {
-//		return getUsernameByTokenBase(refreshToken,secretKeyRefresh);
-//	}
+	public String getUsernameByToken(String token) {
+		return getUsernameByTokenBase(token, secretKey);
+	}
+	
+	public String getUsernameByRefreshToken(String refreshToken) {
+		return getUsernameByTokenBase(refreshToken, refreshSecretKey);
+	}
 	
 	private String getUsernameByTokenBase(String token, SecretKey key) {
 		return Jwts.parserBuilder()

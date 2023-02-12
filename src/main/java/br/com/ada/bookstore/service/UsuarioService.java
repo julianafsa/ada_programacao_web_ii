@@ -5,5 +5,5 @@ import br.com.ada.bookstore.model.dto.UsuarioLoginDTO;
 
 public interface UsuarioService extends BaseService<UsuarioLoginDTO> {
 	TokenDTO logar(UsuarioLoginDTO usuarioLoginDTO) throws Exception;
-//	TokenDTO atualizarToken(String refreshToken);
+	TokenDTO atualizarToken(String refreshToken);
 }

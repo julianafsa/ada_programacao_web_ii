@@ -12,4 +12,6 @@ public class UsuarioDTO {
 	
 //	@NotBlank(message="O campo email deve estar preenchido.")
 	private String email;
+	
+	private Long perfil;
 }
