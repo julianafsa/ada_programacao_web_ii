@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ada.bookstore.model.dto.LivroDTO;
+import br.com.ada.bookstore.model.entity.Categoria;
+import br.com.ada.bookstore.model.entity.Editora;
 import br.com.ada.bookstore.model.entity.Livro;
 import br.com.ada.bookstore.model.mapper.LivroMapper;
 import br.com.ada.bookstore.repository.LivroFilterRepository;
@@ -53,6 +55,18 @@ public class LivroServiceImpl implements LivroService {
 	}
 	
 	@Override
+	public List<LivroDTO> buscarPorCategoria(Categoria categoria) {
+		final List<Livro> entidades = repository.findByCategoria(categoria);
+		return mapper.parseListDTO(entidades);
+	}
+	
+	@Override
+	public List<LivroDTO> buscarPorEditora(Editora editora) {
+		final List<Livro> entidades = repository.findByEditora(editora);
+		return mapper.parseListDTO(entidades);
+	}
+	
+	@Override
 	public List<LivroDTO> filter(LivroDTO entityDTO) {
 		final Livro entidade = mapper.parseEntity(entityDTO);
 		final List<Livro> entidades = filterRepository.filtrar(entidade);
@@ -69,10 +83,12 @@ public class LivroServiceImpl implements LivroService {
 		return mapper.parseDTO(entidade);
 	}
 	
+	@Override
 	@Transactional
 	public List<LivroDTO> criarVarios(List<LivroDTO> entidadesDTO) {
 		final List<Livro> entidades = mapper.parseListEntity(entidadesDTO);
 		repository.saveAll(entidades);
+		entidades.stream().forEach(entidade -> em.refresh(entidade));
 		return mapper.parseListDTO(entidades);
 	}
 	

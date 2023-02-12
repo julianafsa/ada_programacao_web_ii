@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ada.bookstore.model.dto.LivroDTO;
+import br.com.ada.bookstore.model.entity.Categoria;
+import br.com.ada.bookstore.model.entity.Editora;
 import br.com.ada.bookstore.service.LivroService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +48,36 @@ public class LivroController extends BaseController<LivroDTO, LivroService> {
                     .status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(service.filter(entidade));
+
+        } catch(Exception ex) {
+            log.error(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+	
+	//TODO
+	@PostMapping("/filtrar/categoria")
+    public ResponseEntity<List<LivroDTO>> filtrarPorCategoria(@RequestBody Categoria entidade) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(service.buscarPorCategoria(entidade));
+
+        } catch(Exception ex) {
+            log.error(ex.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+	
+	//TODO
+	@PostMapping("/filtrar/editora")
+    public ResponseEntity<List<LivroDTO>> filtrarPorEditora(@RequestBody Editora entidade) {
+        try {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(service.buscarPorEditora(entidade));
 
         } catch(Exception ex) {
             log.error(ex.getMessage());

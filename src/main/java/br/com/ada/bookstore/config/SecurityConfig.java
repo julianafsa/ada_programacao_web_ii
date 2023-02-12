@@ -30,8 +30,13 @@ public class SecurityConfig {
     					.sessionCreationPolicy(SessionCreationPolicy.STATELESS) // desabilita a criação de sessão 
         		.and()
         		.authorizeHttpRequests()
+        		.and()
+        		.authorizeHttpRequests()
         			.requestMatchers(HttpMethod.POST, "/usuarios", "/usuarios/auth").permitAll()
         			.requestMatchers(HttpMethod.GET, "/usuarios/auth/**").permitAll()
+        			.requestMatchers("/editoras", "/editoras/**").permitAll()
+        			.requestMatchers("/categorias", "/categorias/**").permitAll()
+        			.requestMatchers("/livros", "/livros/**", "/livros/filtrar/**").permitAll()
     				.requestMatchers(PathRequest.toH2Console()).permitAll()
     				.anyRequest().authenticated()
         		.and()

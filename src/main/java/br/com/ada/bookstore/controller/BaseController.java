@@ -28,7 +28,7 @@ public abstract class BaseController<T,S extends BaseService<T>> {
 	}
 
     @GetMapping
-    @Secured("ROLE_ADMIN")
+    //@Secured("ROLE_ADMIN")
     public ResponseEntity<List<T>> buscarTodos() {
         return ResponseEntity.ok(service.buscarTodos());
     }
