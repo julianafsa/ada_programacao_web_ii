@@ -15,8 +15,10 @@
 	<description>Bookstore project for Spring Boot by Ada.</description>
 	<properties>
 		<java.version>17</java.version>
+		<maven.compiler.release>17</maven.compiler.release>
 		<org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>
+		<jjwt.version>0.11.2</jjwt.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,7 +57,7 @@
 		    <artifactId>mapstruct</artifactId>
 		    <version>${org.mapstruct.version}</version> 
 		</dependency>
-		<!-- Query DSL -->
+		
 		<dependency>
 	        <groupId>com.querydsl</groupId>
 	        <artifactId>querydsl-apt</artifactId>
@@ -63,12 +65,47 @@
 	        <classifier>jakarta</classifier>
 	        <scope>provided</scope>
 	    </dependency>
+	
 	    <dependency>
 	        <groupId>com.querydsl</groupId>
 	        <artifactId>querydsl-jpa</artifactId>
 	        <classifier>jakarta</classifier>
 	        <version>${querydsl.version}</version>
 	    </dependency>
+	    
+	    <dependency>
+		    <groupId>javax.persistence</groupId>
+		    <artifactId>javax.persistence-api</artifactId>
+		    <version>2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
