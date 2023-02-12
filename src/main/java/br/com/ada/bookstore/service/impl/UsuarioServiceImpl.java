@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.ada.bookstore.controller.TokenDTO;
-import br.com.ada.bookstore.model.dto.UsuarioDTO;
 import br.com.ada.bookstore.model.dto.UsuarioLoginDTO;
 import br.com.ada.bookstore.model.entity.Usuario;
 import br.com.ada.bookstore.model.mapper.UsuarioMapper;
@@ -36,6 +35,9 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private JWTServiceImpl jwtService;
 	
 	@Autowired
+	private AuthServiceImpl authService;
+	
+	@Autowired
 	private AuthenticationManager authenticationManager;
 	
 	public List<UsuarioLoginDTO> buscarTodos() {
@@ -52,7 +54,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	public UsuarioLoginDTO criar(UsuarioLoginDTO entidadeDTO) {
-		final Usuario usuario = mapper.parseEntity(entidadeDTO);
+		Usuario usuario = mapper.parseEntity(entidadeDTO);
 		usuario.setPassword(encoder.encode(usuario.getPassword())); // Salva a senha criptografada.
 		usuario.setId(null);
 		repository.save(usuario);
@@ -60,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	public UsuarioLoginDTO editar(Long id, UsuarioLoginDTO entidadeDTO) {
-		Optional<Usuario> entidadeOp = repository.findById(id);
+		final Optional<Usuario> entidadeOp = repository.findById(id);
 		if (entidadeOp.isPresent()) {
 			Usuario usuario = entidadeOp.get();
 			usuario.setId(id);
@@ -86,23 +88,14 @@ public class UsuarioServiceImpl implements UsuarioService{
 						usuarioLoginDTO.getUsername(), // principal é o nome de usuário.
 						usuarioLoginDTO.getPassword()); // credentials é a senha.
 		authenticationManager.authenticate(autentication);
-		//final Usuario usuario = (Usuario) authService.loadUserByUsername(usuarioLoginDTO.getUsername());
-		Optional<Usuario> usuarioOp = repository.
-				findByUsername(usuarioLoginDTO.getUsername());
-		if (usuarioOp.isPresent()) {
-			final Usuario usuario = usuarioOp.get();
-			final String token = jwtService.generateToken(usuarioLoginDTO.getUsername());
-			
-			final UsuarioDTO usuarioDTO = new UsuarioDTO();
-			usuarioDTO.setNome(usuario.getNome());
-			usuarioDTO.setEmail(usuario.getEmail());
-			return TokenDTO.builder()
-					.token(token)
-					.type("Bearer")
-					.user(usuarioDTO)
-					.build();
-		}
-		throw new EntityNotFoundException();
+		final Usuario usuario = (Usuario) authService.loadUserByUsername(usuarioLoginDTO.getUsername());
+		final String token = jwtService.generateToken(usuarioLoginDTO.getUsername());
+		
+		return TokenDTO.builder()
+				.token(token)
+				.type("Bearer")
+				.user(mapper.parteUsuarioDTO(usuario))
+				.build();
 	}
 	
 }
