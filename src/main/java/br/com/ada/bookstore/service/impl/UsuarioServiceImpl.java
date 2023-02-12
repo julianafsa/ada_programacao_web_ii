@@ -57,7 +57,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		Usuario usuario = mapper.parseEntity(entidadeDTO);
 		usuario.setPassword(encoder.encode(usuario.getPassword())); // Salva a senha criptografada.
 		usuario.setId(null);
-		repository.save(usuario);
+		usuario = repository.save(usuario);
 		return mapper.parseDTO(usuario);
 	}
 	

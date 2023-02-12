@@ -40,9 +40,9 @@ public class JWTServiceImpl {
 	
 	public Boolean validToken(String token) {
 		return Jwts.parserBuilder()
-			.setSigningKey(secretKey)
-			.build()
-			.isSigned(token);
+				.setSigningKey(secretKey)
+				.build()
+				.isSigned(token);
 	}
 	
 //	public Boolean validRefreshToken(String refreshToken) {
@@ -62,7 +62,7 @@ public class JWTServiceImpl {
 	
 	private String getUsernameByTokenBase(String token, SecretKey key) {
 		return Jwts.parserBuilder()
-					.setSigningKey(key)
+				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token)
 				.getBody()
