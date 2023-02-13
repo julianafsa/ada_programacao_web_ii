@@ -20,8 +20,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
-    open-in-view: true
-#    generate-ddl: true
+#    open-in-view: true
+    generate-ddl: true
     properties:
       hibernate:
         format_sql:true

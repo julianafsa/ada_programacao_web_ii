@@ -11,3 +11,11 @@ INSERT INTO editoras (nome, descricao) VALUES ('Globo Livros', 'Editora Globo Li
 INSERT INTO editoras (nome, descricao) VALUES ('Darkside Books', 'Editora Darkside Books');
 INSERT INTO editoras (nome, descricao) VALUES ('Editora Rocco', 'Editora Rocco');
 INSERT INTO editoras (nome, descricao) VALUES ('Aleph', 'Editora Aleph');
+
+INSERT INTO livros (nome, isbn, categoria_id, editora_id) VALUES ('Meu irmão Alemão', '111111111111', '1', '1');
+INSERT INTO livros (nome, isbn, categoria_id, editora_id) VALUES ('Meu irmão Alemão 2', '111111111112', '2', '2');
+
+INSERT INTO perfis (nome, descricao) VALUES ('ROLE_ADMIN', 'Perfil de administrador');
+INSERT INTO perfis (nome, descricao) VALUES ('ROLE_USER', 'Perfil de usuário comum');
+
+INSERT INTO usuarios (username, password, nome, email, perfil_id) VALUES ('admin', '$2a$10$OgLNbKcqUJXp1cWd.YRBgOkIPqygEDNjZR1Wf10VCRW4acJlO4XSW', 'Juliana', 'julianafsa@gmail.com', '1');
