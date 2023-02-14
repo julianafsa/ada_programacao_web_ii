@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -42,9 +43,12 @@ public class Usuario implements UserDetails {
 	@Column(name="email", nullable=false)
 	private String email;
 	
-	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name = "perfil_id", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER)	
 	private Perfil perfil;
+	
+//	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+//	private List<LivroFavoritoUsuario> favoritos = new ArrayList<>();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -15,5 +15,6 @@ public interface LivroMapper {
 	LivroDTO parseDTO(Livro entidade);
 	@Mapping(target = "categoria.livros", ignore = true)
 	@Mapping(target = "editora.livros", ignore = true)
+//	@Mapping(target = "favoritos", ignore = true)
 	Livro parseEntity(LivroDTO entidadeDTO);
 }

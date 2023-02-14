@@ -37,4 +37,7 @@ public class Livro {
 	@JoinColumn(name = "editora_id", nullable = false)
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Editora editora;
+	
+//	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+//	private List<LivroFavoritoUsuario> favoritos = new ArrayList<>();
 }

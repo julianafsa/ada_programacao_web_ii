@@ -14,21 +14,30 @@ import org.springframework.stereotype.Service;
 import br.com.ada.bookstore.controller.TokenDTO;
 import br.com.ada.bookstore.model.dto.UsuarioDTO;
 import br.com.ada.bookstore.model.dto.UsuarioLoginDTO;
+import br.com.ada.bookstore.model.entity.Perfil;
 import br.com.ada.bookstore.model.entity.Usuario;
+import br.com.ada.bookstore.model.mapper.PerfilMapper;
 import br.com.ada.bookstore.model.mapper.UsuarioMapper;
+import br.com.ada.bookstore.repository.PerfilRepository;
 import br.com.ada.bookstore.repository.UsuarioRepository;
 import br.com.ada.bookstore.service.UsuarioService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
 	
 	@Autowired
 	private UsuarioMapper mapper;
+	
+	@Autowired
+	private PerfilMapper perfilMapper;
+	
+	@Autowired
+	private PerfilRepository perfilRepository;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -56,6 +65,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 	
 	public UsuarioLoginDTO criar(UsuarioLoginDTO entidadeDTO) {
+		final Long perfilId = entidadeDTO.getPerfil().getId();
+		if (perfilId != null) {
+			Optional<Perfil> perfilOp = perfilRepository.findById(perfilId);
+			if (perfilOp.isPresent()) {
+				Perfil perfil = perfilOp.get();
+				entidadeDTO.setPerfil(perfilMapper.parseDTO(perfil));
+			} else {
+				throw new EntityNotFoundException("Perfil não existe.");
+			}
+		} 
 		Usuario usuario = mapper.parseEntity(entidadeDTO);
 		usuario.setPassword(encoder.encode(usuario.getPassword())); // Salva a senha criptografada.
 		usuario.setId(null);
@@ -107,7 +126,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			usuarioDTO.setId(usuario.getId());
 			usuarioDTO.setNome(usuario.getNome());
 			usuarioDTO.setEmail(usuario.getEmail());
-			usuarioDTO.setPerfil(usuario.getPerfil().getId());
+			usuarioDTO.setPerfil(perfilMapper.parseDTO(usuario.getPerfil()));
 		}
 		
 		final String token = jwtService.generateToken(username);

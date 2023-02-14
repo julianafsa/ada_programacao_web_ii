@@ -13,15 +13,13 @@ import br.com.ada.bookstore.model.entity.Usuario;
 public interface UsuarioMapper {
 	List<UsuarioLoginDTO> parseListDTO(List<Usuario> entidades);
 	List<Usuario> parseListEntity(List<UsuarioLoginDTO> entidadesDTO);
-	
+
 	@Mapping(target = "password", ignore = true)
-	@Mapping(source = "perfil.id", target = "perfil")
 	UsuarioLoginDTO parseDTO(Usuario entidade);
 	
-	@Mapping(source = "perfil.id", target = "perfil")
 	UsuarioDTO parseUsuarioDTO(Usuario entidade);
 	
 	@Mapping(target="authorities", ignore = true)
-	@Mapping(source = "perfil", target = "perfil.id")
+//	@Mapping(target="favoritos", ignore = true)
 	Usuario parseEntity(UsuarioLoginDTO entidadeDTO);
 }

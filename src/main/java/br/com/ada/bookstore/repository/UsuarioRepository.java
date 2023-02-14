@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import br.com.ada.bookstore.model.entity.Usuario;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+	//@Query(value="SELECT u FROM Usuarios u WHERE UPPER(u.username) = UPPER(:username)")
 	Optional<Usuario> findByUsername(String username);
 }
