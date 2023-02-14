@@ -38,6 +38,4 @@ public class Livro {
 	@ManyToOne(fetch = FetchType.EAGER)	
 	private Editora editora;
 	
-//	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
-//	private List<LivroFavoritoUsuario> favoritos = new ArrayList<>();
 }

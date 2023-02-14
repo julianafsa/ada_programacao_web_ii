@@ -26,8 +26,8 @@ public class LivroController extends BaseController<LivroDTO, LivroService> {
 		super(service);
 	}
 	
-	@PostMapping("/list")
-    public ResponseEntity<List<LivroDTO>> criar(@RequestBody List<LivroDTO> entidades) {
+	@PostMapping("/varios")
+    public ResponseEntity<List<LivroDTO>> criarVarios(@RequestBody List<LivroDTO> entidades) {
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -45,7 +45,7 @@ public class LivroController extends BaseController<LivroDTO, LivroService> {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(service.filter(entidade));
+                    .body(service.filtrar(entidade));
 
         } catch(Exception ex) {
             log.error(ex.getMessage());
@@ -87,7 +87,7 @@ public class LivroController extends BaseController<LivroDTO, LivroService> {
         	return ResponseEntity.ok(service.buscarPorNome(nome));
         } catch(EntityNotFoundException ex) {
         	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch(Exception ex) {
+        } catch(Exception ex) {
             log.error(ex.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

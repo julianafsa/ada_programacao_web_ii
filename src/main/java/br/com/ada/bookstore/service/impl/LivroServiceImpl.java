@@ -65,7 +65,7 @@ public class LivroServiceImpl implements LivroService {
 	}
 	
 	@Override
-	public List<LivroDTO> filter(LivroDTO entityDTO) {
+	public List<LivroDTO> filtrar(LivroDTO entityDTO) {
 		final Livro entidade = mapper.parseEntity(entityDTO);
 		final List<Livro> entidades = filterRepository.filtrar(entidade);
 		return mapper.parseListDTO(entidades);

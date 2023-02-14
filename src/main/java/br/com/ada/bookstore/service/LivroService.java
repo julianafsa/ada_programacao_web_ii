@@ -7,7 +7,7 @@ import br.com.ada.bookstore.model.dto.LivroDTO;
 public interface LivroService extends BaseService<LivroDTO> {
 	List<LivroDTO> buscarPorNome(String nome);
 	List<LivroDTO> criarVarios(List<LivroDTO> entidadesDTO);
-	List<LivroDTO> filter(LivroDTO entidadeDTO);
+	List<LivroDTO> filtrar(LivroDTO entidadeDTO);
 	List<LivroDTO> buscarPorIdCategoria(Long idCategoria);
 	List<LivroDTO> buscarPorIdEditora(Long idEditora);
 }

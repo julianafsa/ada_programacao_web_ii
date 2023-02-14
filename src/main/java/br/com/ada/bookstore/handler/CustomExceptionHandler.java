@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import br.com.ada.bookstore.model.dto.error.ErrorDTO;
-import br.com.ada.bookstore.model.dto.error.FormErrorDTO;
+import br.com.ada.bookstore.model.dto.error.ErroDTO;
+import br.com.ada.bookstore.model.dto.error.ErroDeFormularioDTO;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
@@ -24,13 +24,13 @@ public class CustomExceptionHandler {
 	
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public List<FormErrorDTO> handle(final MethodArgumentNotValidException exception) {
+	public List<ErroDeFormularioDTO> handle(final MethodArgumentNotValidException exception) {
 		
-		final List<FormErrorDTO> dto = new ArrayList<>();
-		final List<FieldError> fieldErros = exception.getBindingResult().getFieldErrors();
-		fieldErros.forEach(e -> {
+		final List<ErroDeFormularioDTO> dto = new ArrayList<>();
+		final List<FieldError> camposErrados = exception.getBindingResult().getFieldErrors();
+		camposErrados.forEach(e -> {
 			final String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-			final FormErrorDTO erro = new FormErrorDTO(new ErrorDTO(e.getField(), mensagem));
+			final ErroDeFormularioDTO erro = new ErroDeFormularioDTO(new ErroDTO(e.getField(), mensagem));
 			dto.add(erro);
 		});
 		return dto;

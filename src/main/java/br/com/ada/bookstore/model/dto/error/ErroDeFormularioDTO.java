@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FormErrorDTO {
+public class ErroDeFormularioDTO {
 
-	private ErrorDTO error;
+	private ErroDTO erro;
 
 }
