@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioDTO;
-import br.com.ada.bookstore.model.dto.output.LivroFavoritoUsuarioOutputDTO;
+import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioOutputDTO;
 import br.com.ada.bookstore.service.LivroFavoritoUsuarioService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

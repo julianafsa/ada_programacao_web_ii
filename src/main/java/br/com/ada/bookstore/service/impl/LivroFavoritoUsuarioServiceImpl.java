@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import br.com.ada.bookstore.model.dto.LivroDTO;
 import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioDTO;
-import br.com.ada.bookstore.model.dto.output.LivroFavoritoUsuarioOutputDTO;
+import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioOutputDTO;
 import br.com.ada.bookstore.model.entity.LivroFavoritoUsuario;
 import br.com.ada.bookstore.model.entity.Usuario;
 import br.com.ada.bookstore.model.mapper.LivroFavoritoUsuarioMapper;

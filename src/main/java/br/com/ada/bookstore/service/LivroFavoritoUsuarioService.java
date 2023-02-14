@@ -3,7 +3,7 @@ package br.com.ada.bookstore.service;
 import java.util.List;
 
 import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioDTO;
-import br.com.ada.bookstore.model.dto.output.LivroFavoritoUsuarioOutputDTO;
+import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioOutputDTO;
 
 public interface LivroFavoritoUsuarioService {
 	List<LivroFavoritoUsuarioOutputDTO> buscarTodos();

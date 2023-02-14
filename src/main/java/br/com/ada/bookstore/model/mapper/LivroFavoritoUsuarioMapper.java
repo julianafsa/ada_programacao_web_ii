@@ -5,7 +5,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import br.com.ada.bookstore.model.dto.output.LivroFavoritoUsuarioOutputDTO;
+import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioOutputDTO;
 import br.com.ada.bookstore.model.entity.LivroFavoritoUsuario;
 
 @Mapper(componentModel = "spring")

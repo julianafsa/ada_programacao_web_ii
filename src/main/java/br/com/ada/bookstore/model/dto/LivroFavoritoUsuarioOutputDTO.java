@@ -1,7 +1,5 @@
-package br.com.ada.bookstore.model.dto.output;
+package br.com.ada.bookstore.model.dto;
 
-import br.com.ada.bookstore.model.dto.CategoriaDTO;
-import br.com.ada.bookstore.model.dto.EditoraDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
