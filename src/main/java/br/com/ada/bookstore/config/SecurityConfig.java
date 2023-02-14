@@ -37,7 +37,6 @@ public class SecurityConfig {
         			.requestMatchers("/editoras", "/editoras/**").permitAll()
         			.requestMatchers("/categorias", "/categorias/**").permitAll()
         			.requestMatchers("/livros", "/livros/**", "/livros/filtrar/**").permitAll()
-//        			.requestMatchers("/favoritos", "/favoritos/**").permitAll()
     				.requestMatchers(PathRequest.toH2Console()).permitAll()
     				.anyRequest().authenticated()
         		.and()

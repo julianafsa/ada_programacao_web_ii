@@ -20,8 +20,6 @@ public interface LivroFavoritoUsuarioMapper {
 	@Mapping(source = "editora.descricao", target = "editora.descricao")
 	List<LivroFavoritoUsuarioOutputDTO> parseListDTO(List<LivroFavoritoUsuario> entidades);
 	
-//	List<LivroFavoritoUsuario> parseListEntity(List<LivroFavoritoUsuarioDTO> entidadesDTO);
-
 	@Mapping(source = "livro.id", target = "id")
 	@Mapping(source = "livro.nome", target = "nome")
 	@Mapping(source = "livro.isbn", target = "isbn")
@@ -31,9 +29,4 @@ public interface LivroFavoritoUsuarioMapper {
 	@Mapping(source = "livro.editora.nome", target = "editora.nome")
 	@Mapping(source = "livro.editora.descricao", target = "editora.descricao")
 	LivroFavoritoUsuarioOutputDTO parseDTO(LivroFavoritoUsuario entidade);
-//	
-////	@Mapping(target = "categoria.livros", ignore = true)
-////	@Mapping(target = "editora.livros", ignore = true)
-////	@Mapping(target = "favoritos", ignore = true)
-//	LivroFavoritoUsuario parseEntity(LivroFavoritoUsuarioDTO entidadeDTO);
 }

@@ -65,16 +65,16 @@ public class LivroServiceImpl implements LivroService {
 	}
 	
 	@Override
-	public List<LivroDTO> filtrar(LivroDTO entityDTO) {
+	public List<LivroDTO> filtrarPorNomeOuIsbn(LivroDTO entityDTO) {
 		final Livro entidade = mapper.parseEntity(entityDTO);
-		final List<Livro> entidades = filterRepository.filtrar(entidade);
+		final List<Livro> entidades = filterRepository.filtrarPorNomeOuIsbn(entidade);
 		return mapper.parseListDTO(entidades);
 	}
 	
 	@Override
 	@Transactional
 	public LivroDTO criar(LivroDTO entidadeDTO) {
-		Livro entidade = mapper.parseEntity(entidadeDTO);
+		final Livro entidade = mapper.parseEntity(entidadeDTO);
 		entidade.setId(null);
 		repository.save(entidade);
 		em.refresh(entidade);

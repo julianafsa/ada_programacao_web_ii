@@ -20,6 +20,5 @@ public interface UsuarioMapper {
 	UsuarioDTO parseUsuarioDTO(Usuario entidade);
 	
 	@Mapping(target="authorities", ignore = true)
-//	@Mapping(target="favoritos", ignore = true)
 	Usuario parseEntity(UsuarioLoginDTO entidadeDTO);
 }

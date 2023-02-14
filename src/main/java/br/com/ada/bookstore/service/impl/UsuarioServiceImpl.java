@@ -58,7 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public UsuarioLoginDTO buscarUm(Long id) {
 		Optional<Usuario> entidadeOp = repository.findById(id);
 		if (entidadeOp.isPresent()) {
-			Usuario usuario = entidadeOp.get();
+			final Usuario usuario = entidadeOp.get();
 			return mapper.parseDTO(usuario);
 		}
 		throw new EntityNotFoundException();
@@ -102,9 +102,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		repository.deleteById(id);
 	}
 	
-	public TokenDTO logar(UsuarioLoginDTO usuarioLoginDTO) throws AuthenticationException,UsernameNotFoundException {
-		UsernamePasswordAuthenticationToken autentication = 
-				new UsernamePasswordAuthenticationToken(usuarioLoginDTO.getUsername(), usuarioLoginDTO.getPassword());
+	public TokenDTO logar(UsuarioLoginDTO usuarioLoginDTO) 
+			throws AuthenticationException,UsernameNotFoundException {
+		final UsernamePasswordAuthenticationToken autentication = 
+				new UsernamePasswordAuthenticationToken(
+						usuarioLoginDTO.getUsername(), usuarioLoginDTO.getPassword());
 		authenticationManager.authenticate(autentication);
 		final Usuario usuario = (Usuario) authService.loadUserByUsername(usuarioLoginDTO.getUsername());
 		return buildTokenDTO(usuario.getUsername(), usuario);
@@ -112,7 +114,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	public TokenDTO atualizarToken(String refreshToken) {
 		if (jwtService.validRefreshToken(refreshToken)) {
-			String username = jwtService.getUsernameByRefreshToken(refreshToken);
+			final String username = jwtService.getUsernameByRefreshToken(refreshToken);
 			final Usuario usuario = (Usuario) authService.loadUserByUsername(username);
 			return buildTokenDTO(username, usuario);
 		}

@@ -46,24 +46,16 @@ public class LivroFavoritoUsuarioServiceImpl implements LivroFavoritoUsuarioServ
 	private EntityManager em;
 	
 	@Override
-	public List<LivroFavoritoUsuarioOutputDTO> buscarTodos() {
-		final String username = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		Optional<Usuario> usuarioOp = usuarioRepository.findByUsername(username);
-		if (!usuarioOp.isPresent()) {
-			throw new EntityNotFoundException("Usuário não encontrado.");
-		}
-		final Usuario usuario = usuarioOp.get();
-		return mapper.parseListDTO(repository.findAll(usuario.getId()));
+	public List<LivroFavoritoUsuarioOutputDTO> buscarTodosLivrosFavoritosDoUsuario() {
+		final Usuario usuario = this.buscarUsuarioLogado();
+		return mapper.parseListDTO(
+				repository.buscarTodosLivrosFavoritosDoUsuario(usuario.getId()));
 	}
 	
 	@Override
 	@Transactional
-	public LivroFavoritoUsuarioOutputDTO criar(@RequestBody LivroFavoritoUsuarioDTO entidadeDTO) {
-		final String username = String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-		Optional<Usuario> usuarioOp = usuarioRepository.findByUsername(username);
-		if (!usuarioOp.isPresent()) {
-			throw new EntityNotFoundException("Usuário não encontrado.");
-		}
+	public LivroFavoritoUsuarioOutputDTO salvarLivroFavorito(@RequestBody LivroFavoritoUsuarioDTO entidadeDTO) {
+		final Usuario usuario = this.buscarUsuarioLogado();
 		
 		final Long livroId = entidadeDTO.getLivro().getId();
 		LivroDTO livroDTO = null;
@@ -74,7 +66,7 @@ public class LivroFavoritoUsuarioServiceImpl implements LivroFavoritoUsuarioServ
 			}
 		}
 		
-		final Long usuarioId = usuarioOp.get().getId();
+		final Long usuarioId = usuario.getId();
 		final List<LivroFavoritoUsuario> livros = repository.findByIdLivro(usuarioId, livroId);
 		if (!livros.isEmpty()) {
 			throw new EntityNotFoundException("Livro já favoritado.");
@@ -82,7 +74,7 @@ public class LivroFavoritoUsuarioServiceImpl implements LivroFavoritoUsuarioServ
 		
 		final LivroFavoritoUsuario entidade = new LivroFavoritoUsuario();
 		entidade.setLivro(livroMapper.parseEntity(livroDTO));
-		entidade.setUsuario(usuarioOp.get());
+		entidade.setUsuario(usuario);
 		
 		entidade.setId(null);
 		repository.save(entidade);
@@ -92,10 +84,27 @@ public class LivroFavoritoUsuarioServiceImpl implements LivroFavoritoUsuarioServ
 	
 	@Override
 	public void excluir(Long id) {
-		if (!repository.existsById(id)) {
-			throw new EntityNotFoundException();
+		final Usuario usuario = this.buscarUsuarioLogado();
+		
+		final Long usuarioId = usuario.getId();
+		final List<LivroFavoritoUsuario> livros = repository.findByIdLivro(usuarioId, id);
+		if (livros.isEmpty()) {
+			throw new EntityNotFoundException("Livro favorito não encontrado.");
 		}
-		repository.deleteById(id);
+		
+		repository.deleteById(livros.get(0).getId()); // Somente 1 livro é retornado, pois não é permitido favoritar um livro já favoritado.
 	}
+	
+	private Usuario buscarUsuarioLogado() {
+		final String username = String.valueOf(
+				SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		final Optional<Usuario> usuarioOp = usuarioRepository.findByUsername(username);
+		if (!usuarioOp.isPresent()) {
+			throw new EntityNotFoundException("Usuário não encontrado.");
+		}
+		return usuarioOp.get();
+	}
+	
+
 
 }

@@ -32,17 +32,17 @@ public class LivroFavoritoUsuarioController {
 	}
 	
     @GetMapping
-    public ResponseEntity<List<LivroFavoritoUsuarioOutputDTO>> buscarTodos() {
-        return ResponseEntity.ok(service.buscarTodos());
+    public ResponseEntity<List<LivroFavoritoUsuarioOutputDTO>> buscarTodosLivrosFavoritosDoUsuario() {
+        return ResponseEntity.ok(service.buscarTodosLivrosFavoritosDoUsuario());
     }
 	
 	@PostMapping
-	public ResponseEntity<LivroFavoritoUsuarioOutputDTO> criar(@RequestBody @Valid LivroFavoritoUsuarioDTO entidade) {
+	public ResponseEntity<LivroFavoritoUsuarioOutputDTO> salvarLivroFavorito(@RequestBody @Valid LivroFavoritoUsuarioDTO entidade) {
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(service.criar(entidade));
+                    .body(service.salvarLivroFavorito(entidade));
         } catch(Exception ex) {
             log.error(ex.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

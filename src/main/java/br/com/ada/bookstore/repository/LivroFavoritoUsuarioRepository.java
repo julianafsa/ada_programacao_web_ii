@@ -13,7 +13,7 @@ import br.com.ada.bookstore.model.entity.LivroFavoritoUsuario;
 public interface LivroFavoritoUsuarioRepository extends JpaRepository<LivroFavoritoUsuario, Long> {
 	
 	@Query(value = "SELECT l FROM LivroFavoritoUsuario l WHERE l.usuario.id = :usuarioId")
-	List<LivroFavoritoUsuario> findAll(@Param("usuarioId") Long usuarioId);
+	List<LivroFavoritoUsuario> buscarTodosLivrosFavoritosDoUsuario(@Param("usuarioId") Long usuarioId);
 	
 	@Query(value = "SELECT l FROM LivroFavoritoUsuario l "
 			+ "WHERE l.usuario.id = :usuarioId "
@@ -21,4 +21,5 @@ public interface LivroFavoritoUsuarioRepository extends JpaRepository<LivroFavor
 			+ "l.livro.id = :livroId")
 	List<LivroFavoritoUsuario> findByIdLivro(@Param("usuarioId") Long usuarioId, 
 			@Param("livroId") Long livroId);
+
 }

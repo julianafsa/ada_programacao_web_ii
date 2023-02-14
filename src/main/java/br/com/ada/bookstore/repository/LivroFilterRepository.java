@@ -26,7 +26,7 @@ public class LivroFilterRepository extends QuerydslRepositorySupport {
 	}
 	
 	@Transactional
-	public List<Livro> filtrar(Livro filter) {
+	public List<Livro> filtrarPorNomeOuIsbn(Livro filter) {
 		QLivro livro = QLivro.livro;
 		
 		List<Predicate> predicates = new ArrayList<>();

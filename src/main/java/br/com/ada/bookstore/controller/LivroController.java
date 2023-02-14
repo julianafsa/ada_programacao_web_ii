@@ -40,12 +40,12 @@ public class LivroController extends BaseController<LivroDTO, LivroService> {
     }
 	
 	@PostMapping("/filtrar")
-    public ResponseEntity<List<LivroDTO>> filtrar(@RequestBody LivroDTO entidade) {
+    public ResponseEntity<List<LivroDTO>> filtrarPorNomeOuIsbn(@RequestBody LivroDTO entidade) {
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(service.filtrar(entidade));
+                    .body(service.filtrarPorNomeOuIsbn(entidade));
 
         } catch(Exception ex) {
             log.error(ex.getMessage());

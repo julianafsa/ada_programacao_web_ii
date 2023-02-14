@@ -6,8 +6,8 @@ import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioDTO;
 import br.com.ada.bookstore.model.dto.LivroFavoritoUsuarioOutputDTO;
 
 public interface LivroFavoritoUsuarioService {
-	List<LivroFavoritoUsuarioOutputDTO> buscarTodos();
-	LivroFavoritoUsuarioOutputDTO criar(LivroFavoritoUsuarioDTO entidadeDTO);
+	List<LivroFavoritoUsuarioOutputDTO> buscarTodosLivrosFavoritosDoUsuario();
+	LivroFavoritoUsuarioOutputDTO salvarLivroFavorito(LivroFavoritoUsuarioDTO entidadeDTO);
 	void excluir(Long id);
 
 }
